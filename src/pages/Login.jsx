@@ -3,6 +3,7 @@ import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/Button";
 import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
 function Login() {
   const { register, handleSubmit } = useForm();
   const loginSubmit = (data) => {
@@ -35,12 +36,12 @@ function Login() {
             Log in
           </Button>
         </form>
-        <a
-          href="/forgot"
+        <Link
+          to="/forgot"
           className=" font-primary inline-block my-3 font-medium"
         >
           forgot your password?
-        </a>
+        </Link>
         <p className=" font-primary text-center font-medium">
           Log in from another method
         </p>

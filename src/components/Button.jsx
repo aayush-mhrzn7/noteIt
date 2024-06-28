@@ -4,7 +4,7 @@ function Button({ placeholder = "", type, className = "", ...props }, ref) {
   return (
     <button
       type={type}
-      className={` shadow-md w-full p-3 font-semibold font-primary ${className}`}
+      className={` shadow-md text-lg w-full p-3 font-semibold font-primary ${className}`}
       {...props}
       ref={ref}
     ></button>

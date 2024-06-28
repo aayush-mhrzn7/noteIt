@@ -13,7 +13,7 @@ function Input(
       </label>
       <input
         type={type}
-        className={`shadow-md p-3 font-primary text-sm  border-2 border-border w-full  ${className}`}
+        className={`shadow-md p-3 font-primary text-lg  border-2 border-border w-full  ${className}`}
         id={id}
         ref={ref}
         placeholder={placeholder}

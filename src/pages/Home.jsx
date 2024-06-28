@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center">
       <div className=" text-center">
@@ -13,7 +15,10 @@ function Home() {
             <span className="inline-block font-semibold mr-1 ">NoteIT: </span>
             Think it,Note it, Get Note it now
           </p>
-          <button className="my-4 bg-primary text-white py-3 px-14 rounded-md font-semibold">
+          <button
+            className="my-4 bg-primary text-white py-3 px-14 rounded-md font-semibold"
+            onClick={() => navigate("/signup")}
+          >
             Signup
           </button>
         </div>

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { TfiAlignRight } from "react-icons/tfi";
 import { TfiClose } from "react-icons/tfi";
 import logo from "../assets/logo.png";
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function Header() {
   const [open, setOpen] = useState(false);
   const navItems = [
@@ -14,34 +13,39 @@ function Header() {
     },
     {
       name: "Notes",
-      slug: "/notes",
+      slug: "/all-notes",
       status: true,
     },
     {
-      name: "Todo",
-      slug: "/todo",
+      name: "Login",
+      slug: "/login",
+      status: true,
+    },
+    {
+      name: "Signup",
+      slug: "/signup",
       status: true,
     },
   ];
+  const navigate = useNavigate();
   return (
     <div>
-      <header className="flex bg-white justify-between py-2 px-10 text-xl h-14 shadow-md items-center">
-        <a href="/" className="font-semibold flex items-center">
+      <header className="flex bg-white justify-between py-2 px-10 text-xl h-14 shadow-md items-center z-20">
+        <Link to="/" className="font-semibold flex items-center">
           <img src={logo} width="50px" height="50px" />
           NoteIt
-        </a>
-        {console.log(open)}
-        {/* <Link to="/">NoteIt</Link> */}
+        </Link>
+
         <nav>
           <ul
-            className={` items-end  ease-in-out ${
+            className={` z-20 items-end  ease-in-out ${
               open
-                ? " flex-col mt-[128px] bg-white p-3 rounded-md shadow-md "
+                ? " flex-col mt-[190px] z-50 bg-white p-3 rounded-md shadow-md "
                 : "flex"
             }`}
           >
             <li
-              className="hidden cursor-pointer max-sm:flex justify-end  ease-in-out"
+              className=" z-20 hidden cursor-pointer max-sm:flex justify-end  ease-in-out"
               onClick={() => setOpen(!open)}
             >
               {open ? <TfiClose /> : <TfiAlignRight />}
@@ -50,7 +54,8 @@ function Header() {
               item.status ? (
                 <li
                   key={item.name}
-                  className={`mx-5  cursor-pointer  hover:animate-bounce font-medium ${
+                  onClick={() => navigate(`${item.slug}`)}
+                  className={`mx-5  z-20  cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
                     open ? "max-sm:block p-2 mr-8   " : "max-sm:hidden"
                   }`}
                 >
