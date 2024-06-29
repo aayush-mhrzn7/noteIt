@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import mockup from "../assets/mockup.png";
 
 function Home() {
   const navigate = useNavigate();
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center">
       <div className=" text-center">
-        <div>
+        <div className="">
           <h1 className="text-5xl font-semibold font-primary mb-3 max-sm:text-3xl">
             {" "}
             You're Brain's Backup{" "}
@@ -23,13 +24,7 @@ function Home() {
           </button>
         </div>
       </div>
-      <div>
-        {/* add image here mmockups */}
-        {/* <img
-          src="https://img.freepik.com/premium-vector/laptop-smartphone-mockup-with-blank-screen-isolated-transparent-background-laptop-phone-vector-template-realistic-mobile-phone-mockup-screen-device-mockup-digital-device-cncept-eps-10_564974-282.jpg"
-          alt=""
-        /> */}
-      </div>
+      <div>{/* add image here mmockups */}</div>
     </div>
   );
 }

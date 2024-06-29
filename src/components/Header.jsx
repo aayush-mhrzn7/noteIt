@@ -3,35 +3,39 @@ import { TfiAlignRight } from "react-icons/tfi";
 import { TfiClose } from "react-icons/tfi";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Logout from "./Logout";
 function Header() {
   const [open, setOpen] = useState(false);
+  const status = useSelector((state) => state.auth.status);
+  console.log(status);
   const navItems = [
     {
       name: "About",
       slug: "/about",
-      status: true,
+      active: status,
     },
     {
       name: "Notes",
       slug: "/all-notes",
-      status: true,
+      active: status,
     },
     {
       name: "Login",
       slug: "/login",
-      status: true,
+      active: !status,
     },
     {
       name: "Signup",
       slug: "/signup",
-      status: true,
+      active: !status,
     },
   ];
   const navigate = useNavigate();
   return (
     <div>
       <header className="flex bg-white justify-between py-2 px-10 text-xl h-14 shadow-md items-center z-20">
-        <Link to="/" className="font-semibold flex items-center">
+        <Link to="/" className="font-semibold font-primary flex items-center">
           <img src={logo} width="50px" height="50px" />
           NoteIt
         </Link>
@@ -51,11 +55,11 @@ function Header() {
               {open ? <TfiClose /> : <TfiAlignRight />}
             </li>
             {navItems.map((item) =>
-              item.status ? (
+              item.active ? (
                 <li
                   key={item.name}
                   onClick={() => navigate(`${item.slug}`)}
-                  className={`mx-5  z-20  cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
+                  className={`mx-5 font-primary z-20  cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
                     open ? "max-sm:block p-2 mr-8   " : "max-sm:hidden"
                   }`}
                 >
@@ -63,6 +67,7 @@ function Header() {
                 </li>
               ) : null
             )}
+            {status ? <Logout /> : null}
           </ul>
         </nav>
       </header>

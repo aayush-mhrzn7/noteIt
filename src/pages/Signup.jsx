@@ -3,10 +3,34 @@ import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/Button";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import auth from "../../appwrite/auth";
+import { useDispatch } from "react-redux";
+import { login } from "../../tools/authSlice";
 function Signup() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
-  const signupSubmit = (data) => {};
+  const signupSubmit = async (data) => {
+    const createUser = await auth.signup(data);
+    if (createUser) {
+      console.log(createUser);
+      const verify = await auth.verification();
+      if (verify) {
+        console.log("user verified");
+        dispatch(login(createUser));
+        navigate("/all-notes");
+      }
+    }
+  };
+  const authGoogle = () => {
+    auth.login("google").then((res) => {
+      console.log(res);
+      dispatch(login(res));
+      navigate("/all-notes");
+    });
+  };
+
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center max-sm:px-10 ">
       <h1 className="text-3xl font-semibold font-primary ">Join us !!</h1>
@@ -21,6 +45,7 @@ function Signup() {
           />
           <Input
             label="email"
+            type="email"
             labelStyle=" capitalize font-semibold my-2 "
             className="rounded-md"
             placeholder="what is your email"
@@ -28,6 +53,7 @@ function Signup() {
           />
           <Input
             label="password"
+            type="password"
             labelStyle=" capitalize font-semibold my-2"
             className="rounded-md"
             placeholder="what is your password"
@@ -52,7 +78,12 @@ function Signup() {
         <p className=" font-primary text-center font-medium">
           Sign up from another method
         </p>
-        <Button className=" bg-white border-border mt-4 rounded-md flex items-center justify-around">
+        <Button
+          className=" bg-white border-border mt-4 rounded-md flex items-center justify-around"
+          onClick={() => {
+            authGoogle();
+          }}
+        >
           Log in by Google
           <FcGoogle />
         </Button>

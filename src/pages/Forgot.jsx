@@ -2,12 +2,13 @@ import React from "react";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/Button";
+import auth from "../../appwrite/auth";
 
 function Forgot() {
   const { register, handleSubmit } = useForm();
-  const forgotPassword = (data) => {
+  const forgotPassword = async (data) => {
     console.log(data);
-    // forgot functionality
+    await auth.forgot(data);
   };
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center max-sm:px-10 ">

@@ -1,10 +1,12 @@
 import { Account, Client, ID, OAuthProvider } from "appwrite";
-
+import config from "../config/config";
 export class AppwriteAuth {
   client = new Client();
   account;
   constructor() {
-    this.client = this.client.setEndpoint().setProject();
+    this.client = this.client
+      .setEndpoint(config.appwriteUrl)
+      .setProject(config.appwriteId);
     this.account = new Account(this.client);
   }
   async getUser() {
@@ -32,14 +34,15 @@ export class AppwriteAuth {
     try {
       return await this.account.createRecovery(
         email,
-        "http://localhost:5173/forgot"
+        "http://localhost:5173/change-password"
       );
     } catch (error) {
       console.log("error: \n", error);
     }
   }
-  async verify() {
+  async verification() {
     try {
+      console.log("inside verify");
       return await this.account.createVerification(
         "http://localhost:5173/verify"
       );
@@ -71,7 +74,7 @@ export class AppwriteAuth {
     try {
       return this.account.createOAuth2Session(
         OAuthProvider.Google,
-        "http://localhost:5173/sucess",
+        "http://localhost:5173/",
         "http://localhost:5173/failed"
       );
     } catch (error) {

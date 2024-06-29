@@ -12,6 +12,7 @@ import Forgot from "./pages/Forgot.jsx";
 import ChangePassword from "./pages/ChangePassword.jsx";
 import AllNotes from "./pages/AllNotes.jsx";
 import Error from "./pages/Error.jsx";
+import Verify from "./pages/Verify.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/all-notes",
         element: <AllNotes />,
+      },
+      {
+        path: "/verify",
+        element: <Verify />,
       },
       {
         path: "*",

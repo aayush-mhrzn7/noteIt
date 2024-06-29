@@ -2,7 +2,15 @@ import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 
 function Input(
-  { placeholder = "", label, labelStyle, type, className = "", ...props },
+  {
+    placeholder = "",
+    label,
+    labelStyle,
+    type,
+    className = "",
+    children,
+    ...props
+  },
   ref
 ) {
   const id = nanoid();
@@ -18,7 +26,7 @@ function Input(
         ref={ref}
         placeholder={placeholder}
         {...props}
-      />
+      ></input>
     </>
   );
 }
