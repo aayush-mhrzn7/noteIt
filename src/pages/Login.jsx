@@ -7,28 +7,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import auth from "../../appwrite/auth";
 import { login } from "../../tools/authSlice";
-import { FaEye } from "react-icons/fa";
-
+import { Toaster, toast } from "react-hot-toast";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const loginSubmit = async (data) => {
-    console.log(data);
     const userData = await auth.login(data);
     if (userData) {
       const session = await auth.getUser(userData);
       if (session) {
-        console.log(session);
         dispatch(login(session));
-        navigate("/all-notes");
+        toast("Logged back in", {
+          duration: 2000,
+          position: "top-center",
+          icon: "👏",
+        });
       }
+      navigate("/all-notes");
+    } else {
+      toast.error("invalid credentials");
     }
   };
   const authGoogle = () => {
-    auth.login("google").then((res) => {
-      console.log(res);
-      dispatch(login(res));
+    const signed = auth.login("google").then((res) => {
+      if (signed) dispatch(login(res));
       navigate("/all-notes");
     });
   };
@@ -37,6 +40,17 @@ function Login() {
     <div className="h-screen w-full flex flex-col justify-center items-center max-sm:px-10 bg-main ">
       <h1 className="text-3xl font-semibold font-primary">Welcome back !! </h1>
       <div className="w-1/3 max-xl:w-1/2 max-sm:w-full  ">
+        <Toaster
+          position="top-center"
+          gutter={8}
+          toastOptions={{
+            className: "mt-20",
+            style: {
+              background: "white",
+              color: "black",
+            },
+          }}
+        ></Toaster>
         <form onSubmit={handleSubmit(loginSubmit)}>
           <Input
             label="email"

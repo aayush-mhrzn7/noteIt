@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import mockup from "../assets/mockup.png";
+/* import mockup from "../assets/mockup.png"; */
 
 function Home() {
   const navigate = useNavigate();
@@ -9,8 +9,7 @@ function Home() {
       <div className=" text-center">
         <div className="">
           <h1 className="text-5xl font-semibold font-primary mb-3 max-sm:text-3xl">
-            {" "}
-            You're Brain's Backup{" "}
+            You're Brain's Backup
           </h1>
           <p className="text-2xl max-sm:text-xl">
             <span className="inline-block font-semibold mr-1 ">NoteIT: </span>

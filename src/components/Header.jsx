@@ -8,7 +8,6 @@ import Logout from "./Logout";
 function Header() {
   const [open, setOpen] = useState(false);
   const status = useSelector((state) => state.auth.status);
-  console.log(status);
   const navItems = [
     {
       name: "About",

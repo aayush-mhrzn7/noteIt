@@ -7,26 +7,39 @@ import { Link, useNavigate } from "react-router-dom";
 import auth from "../../appwrite/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../../tools/authSlice";
+import { Toaster, toast } from "react-hot-toast";
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const signupSubmit = async (data) => {
-    const createUser = await auth.signup(data);
-    if (createUser) {
-      console.log(createUser);
+    const user = await auth.signup(data);
+    toast.loading("creating new account", {
+      duration: 2000,
+      position: "top-center",
+      icon: "👷‍♂️",
+    });
+
+    if (user) {
       const verify = await auth.verification();
+      toast("mail sent", {
+        duration: 2000,
+        position: "top-center",
+      });
       if (verify) {
-        console.log("user verified");
-        dispatch(login(createUser));
+        toast("user verified", {
+          duration: 2000,
+          position: "top-center",
+          icon: "✅",
+        });
+        dispatch(login(user));
         navigate("/all-notes");
       }
     }
   };
   const authGoogle = () => {
-    auth.login("google").then((res) => {
-      console.log(res);
-      dispatch(login(res));
+    const signed = auth.login("google").then((res) => {
+      if (signed) dispatch(login(res));
       navigate("/all-notes");
     });
   };
@@ -35,6 +48,17 @@ function Signup() {
     <div className="h-screen w-full flex flex-col justify-center items-center max-sm:px-10 ">
       <h1 className="text-3xl font-semibold font-primary ">Join us !!</h1>
       <div className="w-1/3 max-xl:w-1/2 max-sm:w-full  ">
+        <Toaster
+          position="top-center"
+          gutter={8}
+          toastOptions={{
+            className: "mt-20",
+            style: {
+              background: "white",
+              color: "black",
+            },
+          }}
+        />
         <form onSubmit={handleSubmit(signupSubmit)}>
           <Input
             label="name"

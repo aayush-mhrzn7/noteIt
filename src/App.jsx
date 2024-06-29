@@ -1,30 +1,31 @@
+import { useEffect } from "react";
 import Header from "./components/Header";
-import ChangePassword from "./pages/ChangePassword";
-import Error from "./pages/Error";
-import Forgot from "./pages/Forgot";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Home from "./pages/Home";
-import Notecard from "./pages/Notecard";
-
-import AllNotes from "./pages/AllNotes";
 import { Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import auth from "../appwrite/auth";
+import { login, logout } from "../tools/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    auth
+      .getUser()
+      .then((user) => {
+        if (user) {
+          console.log("User is logged in");
+          dispatch(login(user));
+        } else {
+          dispatch(logout());
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <>
       <Header></Header>
       <main>
         <Outlet />
       </main>
-      {/*  <Header></Header>
-      <Home></Home>
-      <Signup></Signup>
-      <Login></Login>
-      <ChangePassword></ChangePassword>
-      <Forgot></Forgot>
-      <Error></Error>
-      <AllNotes></AllNotes> */}
     </>
   );
 }
