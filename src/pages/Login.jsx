@@ -54,8 +54,8 @@ function Login() {
         <form onSubmit={handleSubmit(loginSubmit)}>
           <Input
             label="email"
-            labelStyle=" capitalize font-semibold my-2"
-            className="rounded-md"
+            labelStyle=" capitalize font-semibold my-2 "
+            className="rounded-md lowercase"
             placeholder="what is your email"
             {...register("email", { required: true })}
           />
