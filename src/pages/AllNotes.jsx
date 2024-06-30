@@ -6,6 +6,7 @@ import { FaHeart } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import Modal from "./Modal";
 function AllNotes() {
+  const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [favorate, setFavorate] = useState(false);
   const handleOpen = () => {
@@ -17,6 +18,7 @@ function AllNotes() {
       <div className="flex justify-center items-center flex-grow ">
         <form className="mt-16 mx-6 bg-white max-w-3xl w-full rounded-xl flex items-center justify-between  ">
           <input
+            onChange={(e) => setSearch(e.target.value)}
             type="text"
             placeholder="Find your notes"
             className="p-3 px-8 rounded-xl w-1/2 font-primary font-medium outline-none "
@@ -41,7 +43,11 @@ function AllNotes() {
           </div>
         </div>
         {open ? <Modal /> : null}
-        {MOCK_DATA.map((d) => (
+        {MOCK_DATA.filter((item) => {
+          return search.toLowerCase() === ""
+            ? item
+            : item.title.toLowerCase().includes(search);
+        }).map((d) => (
           <div
             className={`bg-white transition-transform rounded-xl my-3 w-full shadow-xl block p-4 cursor-pointer ${
               open ? `null` : `hover:scale-[1.06]`

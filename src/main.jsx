@@ -14,6 +14,7 @@ import AllNotes from "./pages/AllNotes.jsx";
 import Error from "./pages/Error.jsx";
 import Verify from "./pages/Verify.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
+import Favorates from "./pages/Favorates.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout>
             <AllNotes />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/favorates",
+        element: (
+          <AuthLayout>
+            <Favorates />
           </AuthLayout>
         ),
       },

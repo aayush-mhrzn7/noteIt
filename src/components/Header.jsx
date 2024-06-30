@@ -20,6 +20,11 @@ function Header() {
       active: status,
     },
     {
+      name: "Favorates",
+      slug: "/favorates",
+      active: status,
+    },
+    {
       name: "Login",
       slug: "/login",
       active: !status,
