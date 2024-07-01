@@ -21,7 +21,7 @@ function Header() {
     },
     {
       name: "Favorites",
-      slug: "/favorites",
+      slug: "/favorates",
       active: status,
     },
     {
