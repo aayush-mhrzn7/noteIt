@@ -20,8 +20,8 @@ function Header() {
       active: status,
     },
     {
-      name: "Favorates",
-      slug: "/favorates",
+      name: "Favorites",
+      slug: "/favorites",
       active: status,
     },
     {

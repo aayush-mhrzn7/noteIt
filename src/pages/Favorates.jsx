@@ -8,7 +8,7 @@ function Favorates() {
   return (
     <div className="w-full h-screen">
       <h1 className="text-4xl max-sm:text-2xl font-primary font-medium text-center mt-20">
-        Your Favorate Notes 📒
+        Your Favorite Notes 📒
       </h1>
       <div className="grid gap-9 py-20 px-40 grid-cols-4  max-sm:grid-cols-1 max-lg:grid-cols-2 max-xl:grid-cols-3 max-sm:px-6  max-xl:p-10  ">
         {MOCK_JSON.map((d) => (
