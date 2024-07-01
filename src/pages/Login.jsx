@@ -14,8 +14,10 @@ function Login() {
   const { register, handleSubmit } = useForm();
   const loginSubmit = async (data) => {
     const userData = await auth.login(data);
+    console.log(data)
+    console.log(userData)
     if (userData) {
-      const session = await auth.getUser(userData);
+      const session = await auth.getUser();
       if (session) {
         dispatch(login(session));
         toast("Logged back in", {
