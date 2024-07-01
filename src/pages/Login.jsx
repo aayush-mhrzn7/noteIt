@@ -61,6 +61,7 @@ function Login() {
           />
           <Input
             label="password"
+            type="password"
             labelStyle=" capitalize font-semibold my-2 "
             className="rounded-md "
             placeholder="what is your password"
