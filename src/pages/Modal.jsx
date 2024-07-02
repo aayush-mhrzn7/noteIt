@@ -10,7 +10,6 @@ function Modal() {
   const createNew = async (data) => {
     const note = await service.createDocuments(data);
     if (note) {
-      console.log(note);
       console.log("note has been created");
     } else {
       console.log("note has not been created");

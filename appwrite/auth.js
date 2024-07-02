@@ -74,8 +74,8 @@ export class AppwriteAuth {
     try {
       return this.account.createOAuth2Session(
         OAuthProvider.Google,
-        "http://localhost:5173/",
-        "http://localhost:5173/failed"
+        "http://localhost:5173/login/oauth2/success",
+        "http://localhost:5173/login/oauth2/failure"
       );
     } catch (error) {
       console.log("error: \n", error);

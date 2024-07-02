@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/Button";
@@ -11,6 +11,7 @@ import { Toaster, toast } from "react-hot-toast";
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [viewPassword, setViewPassword] = useState(false);
   const { register, handleSubmit } = useForm();
   const signupSubmit = async (data) => {
     const user = await auth.signup(data);
@@ -38,10 +39,12 @@ function Signup() {
     }
   };
   const authGoogle = () => {
-    const signed = auth.login("google").then((res) => {
-      if (signed) dispatch(login(res));
-      navigate("/all-notes");
-    });
+    const signed = auth.googleAuth();
+    if (signed) {
+      navigate("/all-posts");
+    } else {
+      navigate("/error");
+    }
   };
 
   return (
@@ -77,12 +80,25 @@ function Signup() {
           />
           <Input
             label="password"
-            type="password"
+            type={viewPassword ? "text" : "password"}
             labelStyle=" capitalize font-semibold my-2"
             className="rounded-md"
             placeholder="what is your password"
             {...register("password", { required: true })}
           />
+          <div className="flex items-center justify-end my-3">
+            <label
+              htmlFor="passcheck"
+              className=" inline-block mx-4 font-semibold font-primary"
+            >
+              view password
+            </label>
+            <input
+              type="checkbox"
+              onChange={(e) => setViewPassword(!viewPassword)}
+              id="passcheck"
+            />
+          </div>
           <Button
             type="submit"
             className="bg-primary  text-white mt-6  rounded-md"

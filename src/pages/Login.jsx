@@ -15,8 +15,7 @@ function Login() {
   const { register, handleSubmit } = useForm();
   const loginSubmit = async (data) => {
     const userData = await auth.login(data);
-    console.log(data);
-    console.log(userData);
+
     if (userData) {
       const session = await auth.getUser();
       if (session) {
@@ -33,10 +32,12 @@ function Login() {
     }
   };
   const authGoogle = () => {
-    const signed = auth.login("google").then((res) => {
-      if (signed) dispatch(login(res));
-      navigate("/all-notes");
-    });
+    const signed = auth.googleAuth();
+    if (signed) {
+      navigate("/all-posts");
+    } else {
+      navigate("/error");
+    }
   };
 
   return (
@@ -64,16 +65,29 @@ function Login() {
           />
           <Input
             label="password"
-            type="password"
+            type={viewPassword ? "text" : "password"}
             labelStyle=" capitalize font-semibold my-2 "
             className="rounded-md "
             placeholder="what is your password"
             {...register("password", { required: true })}
           />
+          <div className="flex items-center justify-end my-3">
+            <label
+              htmlFor="passcheck"
+              className=" inline-block mx-4 font-semibold font-primary"
+            >
+              view password
+            </label>
+            <input
+              type="checkbox"
+              onChange={(e) => setViewPassword(!viewPassword)}
+              id="passcheck"
+            />
+          </div>
 
           <Button
             type="submit"
-            className="bg-primary  text-white mt-6 rounded-md"
+            className="bg-primary  text-white mt-1 rounded-md"
           >
             Log in
           </Button>
