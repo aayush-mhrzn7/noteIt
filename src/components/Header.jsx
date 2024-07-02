@@ -71,7 +71,7 @@ function Header() {
                 </li>
               ) : null
             )}
-            {status ? <Logout /> : null}
+            {!status ? <Logout /> : null}
           </ul>
         </nav>
       </header>

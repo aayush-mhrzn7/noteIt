@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/Button";
@@ -10,12 +10,13 @@ import { login } from "../../tools/authSlice";
 import { Toaster, toast } from "react-hot-toast";
 function Login() {
   const navigate = useNavigate();
+  const [viewPassword, setViewPassword] = useState(false);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const loginSubmit = async (data) => {
     const userData = await auth.login(data);
-    console.log(data)
-    console.log(userData)
+    console.log(data);
+    console.log(userData);
     if (userData) {
       const session = await auth.getUser();
       if (session) {

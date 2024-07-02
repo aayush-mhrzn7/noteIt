@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
+import service from "../../appwrite/service";
 
 function Modal() {
   const [close, setClose] = useState(false);
   const { register, handleSubmit } = useForm();
-  const createNew = (data) => {
-    console.log(data);
+  const createNew = async (data) => {
+    const note = await service.createDocuments(data);
+    if (note) {
+      console.log(note);
+      console.log("note has been created");
+    } else {
+      console.log("note has not been created");
+    }
     setClose(true);
   };
   const handleClose = () => {
@@ -44,6 +51,12 @@ function Modal() {
             placeholder="enter your body here"
             {...register("body", { required: true })}
           ></textarea>
+          <div className="flex items-center font-semibold font-primary">
+            <label htmlFor="favorate" className="mr-2">
+              Favorate
+            </label>
+            <input type="checkbox" id="favorate" {...register("favorate")} />
+          </div>
           <button
             type="submit"
             className="mt-4 font-primary bg-primary text-white py-2 px-4 rounded"

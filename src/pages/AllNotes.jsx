@@ -1,18 +1,27 @@
-import React, { useState } from "react";
-import MOCK_DATA from "../../MOCK_DATA.json";
+import React, { useEffect, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import Modal from "./Modal";
+import service from "../../appwrite/service";
 function AllNotes() {
+  const [Notes, setNotes] = useState([]);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
-  const [favorate, setFavorate] = useState(false);
   const handleOpen = () => {
     setOpen(!open);
     console.log(open);
   };
+
+  useEffect(() => {
+    (async () => {
+      const notes = await service.listDocuments();
+      if (notes) {
+        setNotes(notes.documents);
+      }
+    })();
+  }, []);
   return (
     <div className=" h-screen w-full">
       <div className="flex justify-center items-center flex-grow ">
@@ -43,7 +52,32 @@ function AllNotes() {
           </div>
         </div>
         {open ? <Modal /> : null}
-        {MOCK_DATA.filter((item) => {
+        {Notes.filter((note) => {
+          return search.toLowerCase() == ""
+            ? note
+            : note.title.toLowerCase().includes(search);
+        }).map((note) => (
+          <div
+            className={`bg-white transition-transform rounded-xl my-3 w-full shadow-xl block p-4 cursor-pointer ${
+              open ? `null` : `hover:scale-[1.06]`
+            } `}
+            key={nanoid()}
+            onClick={() => console.log("click")}
+          >
+            <p className="font-semibold font-primary mt-3 mb-6 flex justify-between items-center">
+              {note.favorate ? <FaHeart /> : <FaRegHeart />}
+            </p>
+            <h1 className="text-xl font-semibold font-primary mt-2">
+              {note.title}
+            </h1>
+            <p className="font-primary my-2">
+              {note.body.length > 70
+                ? `${note.body.slice(0, 70)} ....`
+                : ` ${note.body}`}
+            </p>
+          </div>
+        ))}
+        {/* {MOCK_DATA.filter((item) => {
           return search.toLowerCase() === ""
             ? item
             : item.title.toLowerCase().includes(search);
@@ -53,6 +87,7 @@ function AllNotes() {
               open ? `null` : `hover:scale-[1.06]`
             } `}
             key={nanoid()}
+            onClick={() => console.log("click")}
           >
             <p className="font-semibold font-primary  mt-3 mb-6 flex justify-between items-center">
               {d.date}{" "}
@@ -77,7 +112,7 @@ function AllNotes() {
                 : ` ${d.body}`}
             </p>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );
