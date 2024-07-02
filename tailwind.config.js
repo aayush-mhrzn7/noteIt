@@ -12,6 +12,7 @@ export default {
         white: "#fff",
         border: "#EDEDED",
         mainColor: "#FFECCF",
+        red: "#A63446",
       },
     },
   },

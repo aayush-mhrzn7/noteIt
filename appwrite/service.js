@@ -44,7 +44,7 @@ export class AppwriteService {
       console.log("error in getting document", error);
     }
   }
-  async updateDocuments(id) {
+  async updateDocuments(id, { title, body, favorate }) {
     try {
       return await this.databases.updateDocument(
         config.databaseID,

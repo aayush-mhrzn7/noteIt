@@ -4,8 +4,14 @@ import service from "../../appwrite/service";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { nanoid } from "@reduxjs/toolkit";
+import ViewPost from "./ViewPost";
+
 function Favorates() {
   const [Notes, setNotes] = useState([]);
+  const [selectedNode, setSelectedNode] = useState();
+  const handleSelected = (note) => {
+    setSelectedNode(note);
+  };
   useEffect(() => {
     (async () => {
       const notes = await service.listDocuments();
@@ -19,6 +25,9 @@ function Favorates() {
       <h1 className="text-4xl max-sm:text-2xl font-primary font-medium text-center mt-20">
         Your Favorite Notes 📒
       </h1>
+      {selectedNode && (
+        <ViewPost note={selectedNode} onClose={() => setSelectedNode(null)} />
+      )}
       <div className="grid gap-9 py-20 px-40 grid-cols-4  max-sm:grid-cols-1 max-lg:grid-cols-2 max-xl:grid-cols-3 max-sm:px-6  max-xl:p-10  ">
         {Notes.filter((note) => {
           return note.favorate === true;
@@ -28,7 +37,7 @@ function Favorates() {
               open ? `null` : `hover:scale-[1.06]`
             } `}
             key={nanoid()}
-            onClick={() => console.log("click")}
+            onClick={() => handleSelected(note)}
           >
             <p className="font-semibold font-primary mt-3 mb-6 flex justify-between items-center">
               {note.favorate ? <FaHeart /> : <FaRegHeart />}
