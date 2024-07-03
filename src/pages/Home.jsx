@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-/* import mockup from "../assets/mockup.png"; */
+import img from "../assets/img.png";
 
 function Home() {
   const navigate = useNavigate();
   const active = useSelector((state) => state.auth.status);
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center">
+    <div className="w-full h-[90vh] flex max-md:flex-col    items-center justify-center">
       <div className=" text-center">
         <div className="">
           <h1 className="text-5xl font-semibold font-primary mb-3 max-sm:text-3xl">
@@ -27,7 +27,9 @@ function Home() {
           )}
         </div>
       </div>
-      <div>{/* add image here mmockups */}</div>
+      <div className="m-2 max-md:m-10">
+        <img src={img} alt="" />
+      </div>
     </div>
   );
 }
