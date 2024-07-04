@@ -4,7 +4,7 @@ import { logout } from "../../tools/authSlice";
 import auth from "../../appwrite/auth";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
-function Logout() {
+function Logout({ ...props }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const deleteSession = async () => {
@@ -35,6 +35,7 @@ function Logout() {
         onClick={() => {
           deleteSession();
         }}
+        {...props}
       >
         Logout
       </button>

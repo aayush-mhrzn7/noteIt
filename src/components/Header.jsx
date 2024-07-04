@@ -58,12 +58,13 @@ function Header() {
             >
               {open ? <TfiClose /> : <TfiAlignRight />}
             </li>
+
             {navItems.map((item) =>
               item.active ? (
                 <li
                   key={item.name}
                   onClick={() => navigate(`${item.slug}`)}
-                  className={`mx-5 font-primary z-20 font-semibold cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
+                  className={`mx-5 font-primary z-20  cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
                     open ? "max-sm:block p-2 mr-8   " : "max-sm:hidden"
                   }`}
                 >
@@ -71,7 +72,17 @@ function Header() {
                 </li>
               ) : null
             )}
-            <li>{status ? <Logout /> : null}</li>
+            {open && (
+              <li className="max-sm:block mx-2 hover:underline">
+                <Logout />
+              </li>
+            )}
+
+            <li>
+              {status ? (
+                <Logout className=" max-sm:hidden font-semibold" />
+              ) : null}
+            </li>
           </ul>
         </nav>
       </header>
