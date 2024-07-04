@@ -7,7 +7,7 @@ function Home() {
   const navigate = useNavigate();
   const active = useSelector((state) => state.auth.status);
   return (
-    <div className="w-full h-[90vh] flex max-md:flex-col    items-center justify-center">
+    <div className="w-full h-[90vh] flex max-md:flex-col animate-fadeIn  items-center justify-center">
       <div className=" text-center">
         <div className="">
           <h1 className="text-5xl font-semibold font-primary mb-3 max-sm:text-3xl">

@@ -14,6 +14,15 @@ export default {
         mainColor: "#FFECCF",
         red: "#A63446",
       },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: 0, transform: "translateX(-50%)" },
+          "100%": { opacity: 1 },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 0.7s  ease-in-out",
+      },
     },
   },
   plugins: [],

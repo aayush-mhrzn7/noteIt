@@ -8,7 +8,6 @@ function ViewPost({ note, onClose }) {
   const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
-    // Set the form values when the component mounts or note changes
     setValue("title", note.title);
     setValue("body", note.body);
     setValue("favorate", note.favorate);
@@ -17,7 +16,7 @@ function ViewPost({ note, onClose }) {
   const updateNote = async (data) => {
     try {
       await service.updateDocuments(note.$id, data);
-      onClose(); // Close the modal after successful update
+      onClose();
     } catch (error) {
       console.log("failed to update");
       console.log(error);
@@ -27,7 +26,7 @@ function ViewPost({ note, onClose }) {
   const deleteNote = async () => {
     try {
       await service.deleteDocuments(note.$id);
-      onClose(); // Close the modal after successful deletion
+      onClose();
     } catch (error) {
       console.log("error in deletion");
       console.log(error);

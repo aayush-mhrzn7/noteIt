@@ -21,13 +21,14 @@ function AllNotes() {
     setSelectedNote(note);
   };
 
+  async function fetchNotes() {
+    const notes = await service.listDocuments();
+    if (notes) {
+      setNotes(notes.documents);
+    }
+  }
   useEffect(() => {
-    (async () => {
-      const notes = await service.listDocuments();
-      if (notes) {
-        setNotes(notes.documents);
-      }
-    })();
+    fetchNotes();
   }, []);
 
   return (
@@ -47,9 +48,7 @@ function AllNotes() {
         </form>
       </div>
 
-      {/* Notes grid */}
       <div className="grid gap-9 py-20 px-40 grid-cols-4 max-sm:grid-cols-1 max-lg:grid-cols-2 max-xl:grid-cols-3 max-sm:px-6 max-xl:p-10">
-        {/* Add new note button */}
         <div
           className="bg-gray-200 rounded-xl my-3 shadow-xl w-full p-4 h-[22rem] cursor-pointer"
           onClick={handleOpen}
@@ -62,15 +61,12 @@ function AllNotes() {
           </div>
         </div>
 
-        {/* Modal for adding new note */}
         {open && <Modal />}
 
-        {/* View note modal */}
         {selectedNote && (
           <ViewPost note={selectedNote} onClose={() => setSelectedNote(null)} />
         )}
 
-        {/* Existing notes */}
         {Notes.filter((note) => {
           return (
             search.toLowerCase() === "" ||
