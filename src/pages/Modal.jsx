@@ -3,12 +3,16 @@ import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 import service from "../../appwrite/service";
+import { useSelector } from "react-redux";
 
 function Modal() {
   const [close, setClose] = useState(false);
   const { register, handleSubmit } = useForm();
+  const state = useSelector((state) => state.auth.user);
+  const userId = state.$id;
+  console.log(userId);
   const createNew = async (data) => {
-    const note = await service.createDocuments(data);
+    const note = await service.createDocuments(data /* userId */);
     if (note) {
       console.log("note has been created");
     } else {

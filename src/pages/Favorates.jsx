@@ -15,9 +15,7 @@ function Favorates() {
   useEffect(() => {
     (async () => {
       const notes = await service.listDocuments();
-      if (notes) {
-        setNotes(notes.documents);
-      }
+      setNotes(notes);
     })();
   }, []);
   return (

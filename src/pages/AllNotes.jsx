@@ -5,14 +5,16 @@ import { FaHeart } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import Modal from "./Modal";
 import service from "../../appwrite/service";
-import ViewPost from "./ViewPost"; // Changed to PascalCase as it's a component
-
+import ViewPost from "./ViewPost";
+import { useSelector } from "react-redux";
 function AllNotes() {
   const [Notes, setNotes] = useState([]);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
+  /*   const state = useSelector((state) => state.auth.user); */
   const [selectedNote, setSelectedNote] = useState(null);
-
+  /*   const userId = state.email;
+   */
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -22,7 +24,7 @@ function AllNotes() {
   };
 
   async function fetchNotes() {
-    const notes = await service.listDocuments();
+    const notes = await service.listDocuments(/* { userId } */);
     if (notes) {
       setNotes(notes.documents);
     }
@@ -33,7 +35,6 @@ function AllNotes() {
 
   return (
     <div className="h-screen w-full">
-      {/* Search form */}
       <div className="flex justify-center items-center flex-grow ">
         <form className="mt-16 mx-6 bg-white max-w-3xl w-full rounded-xl flex items-center justify-between">
           <input
@@ -76,7 +77,11 @@ function AllNotes() {
           <div
             className="bg-white transition-transform rounded-xl my-3 w-full shadow-xl block p-4 cursor-pointer hover:scale-[1.06]"
             key={nanoid()}
-            onClick={() => handleViewPost(note)}
+            onClick={() => {
+              handleViewPost(note);
+
+              console.log(note);
+            }}
           >
             <p className="font-semibold font-primary mt-3 mb-6 flex justify-between items-center">
               {note.favorate ? <FaHeart /> : <FaRegHeart />}
