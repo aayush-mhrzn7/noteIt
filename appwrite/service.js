@@ -9,10 +9,11 @@ export class AppwriteService {
   }
   async listDocuments() {
     try {
-      return await this.databases.listDocuments(
+      const documents = await this.databases.listDocuments(
         config.databaseID,
         config.collectionID
       );
+      return documents.documents;
     } catch (error) {
       console.log("error in listing document", error);
     }

@@ -15,6 +15,14 @@ function AllNotes() {
   const [selectedNote, setSelectedNote] = useState(null);
   /*   const userId = state.email;
    */
+  /* pasgination  */
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 6;
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = Notes.slice(firstIndex, lastIndex);
+  const noOfPages = Math.ceil(Notes.length / recordsPerPage);
+  const number = [...Array(noOfPages + 1).keys()].slice(1);
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -26,15 +34,28 @@ function AllNotes() {
   async function fetchNotes() {
     const notes = await service.listDocuments(/* { userId } */);
     if (notes) {
-      setNotes(notes.documents);
+      setNotes(notes);
     }
   }
+  const changeCurrentPage = (id) => {
+    setCurrentPage(id);
+  };
+  const prevPage = () => {
+    if (currentPage !== firstIndex) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const nextPage = () => {
+    if (currentPage !== lastIndex) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   useEffect(() => {
     fetchNotes();
   }, []);
 
   return (
-    <div className="h-screen w-full">
+    <div className="h-[90vh]] w-full">
       <div className="flex justify-center items-center flex-grow ">
         <form className="mt-16 mx-6 bg-white max-w-3xl w-full rounded-xl flex items-center justify-between">
           <input
@@ -68,35 +89,67 @@ function AllNotes() {
           <ViewPost note={selectedNote} onClose={() => setSelectedNote(null)} />
         )}
 
-        {Notes.filter((note) => {
-          return (
-            search.toLowerCase() === "" ||
-            note.title.toLowerCase().includes(search.toLowerCase())
-          );
-        }).map((note) => (
-          <div
-            className="bg-white transition-transform rounded-xl my-3 w-full shadow-xl block p-4 cursor-pointer hover:scale-[1.06]"
-            key={nanoid()}
-            onClick={() => {
-              handleViewPost(note);
+        {records
+          .filter((note) => {
+            return (
+              search.toLowerCase() === "" ||
+              note.title.toLowerCase().includes(search.toLowerCase())
+            );
+          })
+          .map((note) => (
+            <div
+              className="bg-white transition-transform rounded-xl my-3 w-full shadow-xl block p-4 cursor-pointer hover:scale-[1.06]"
+              key={nanoid()}
+              onClick={() => {
+                handleViewPost(note);
 
-              console.log(note);
-            }}
-          >
-            <p className="font-semibold font-primary mt-3 mb-6 flex justify-between items-center">
-              {note.favorate ? <FaHeart /> : <FaRegHeart />}
-            </p>
-            <h1 className="text-xl font-semibold font-primary mt-2">
-              {note.title}
-            </h1>
-            <p className="font-primary my-2">
-              {note.body.length > 70
-                ? `${note.body.slice(0, 70)} ....`
-                : note.body}
-            </p>
-          </div>
-        ))}
+                console.log(note);
+              }}
+            >
+              <p className="font-semibold font-primary mt-3 mb-6 flex justify-between items-center">
+                {note.favorate ? <FaHeart /> : <FaRegHeart />}
+              </p>
+              <h1 className="text-xl font-semibold font-primary mt-2">
+                {note.title}
+              </h1>
+              <p className="font-primary my-2">
+                {note.body.length > 70
+                  ? `${note.body.slice(0, 70)} ....`
+                  : note.body}
+              </p>
+            </div>
+          ))}
       </div>
+      <nav className="fixed bottom-9 left-1/2 right-1/2">
+        <ul className="flex items-center justify-center">
+          <li className="mx-4 font-primary font-semibold text-lg">
+            <a href="#" className="" onClick={() => prevPage()}>
+              Prev
+            </a>
+          </li>
+          {number.map((number, index) => (
+            <li
+              className={` mx-4 font-primary font-semibold text-lg ease-in ${
+                currentPage === number ? "underline underline-offset-8" : ""
+              }`}
+              key={index}
+            >
+              <a href="#" onClick={() => changeCurrentPage(number)}>
+                {number}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href="#"
+              className="mx-4 font-primary font-semibold text-lg"
+              onClick={() => nextPage()}
+            >
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
