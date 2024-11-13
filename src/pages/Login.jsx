@@ -31,12 +31,14 @@ function Login() {
       toast.error("invalid credentials");
     }
   };
-  const authGoogle = () => {
-    const signed = auth.googleAuth();
-    if (signed) {
+  const authGoogle = async () => {
+    try {
+      const user = await auth.googleAuth();
+      console.log("google authentication is a sucess");
+      dispatch(login(user));
       navigate("/all-posts");
-    } else {
-      navigate("/error");
+    } catch (error) {
+      console.log("error with google authentication ");
     }
   };
 

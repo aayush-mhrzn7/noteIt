@@ -16,6 +16,13 @@ export class AppwriteAuth {
       console.log("error: \n", error);
     }
   }
+  async getSession() {
+    try {
+      return await this.account.getSession("current");
+    } catch (error) {
+      console.log("error: \n", error);
+    }
+  }
   async login({ email, password }) {
     try {
       return await this.account.createEmailPasswordSession(email, password);
@@ -74,8 +81,8 @@ export class AppwriteAuth {
     try {
       return this.account.createOAuth2Session(
         OAuthProvider.Google,
-        "http://localhost:5173/login/oauth2/success",
-        "http://localhost:5173/login/oauth2/failure"
+        "http://localhost:5173",
+        "http://localhost:5173/login"
       );
     } catch (error) {
       console.log("error: \n", error);

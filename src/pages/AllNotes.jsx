@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
@@ -50,7 +50,10 @@ function AllNotes() {
       setCurrentPage(currentPage + 1);
     }
   };
-  useEffect(() => {
+  /*   useEffect(() => {
+    fetchNotes();
+  }, []); */
+  const memoizedNote = useMemo(() => {
     fetchNotes();
   }, []);
 
