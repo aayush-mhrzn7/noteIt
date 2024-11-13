@@ -41,7 +41,7 @@ export class AppwriteAuth {
     try {
       return await this.account.createRecovery(
         email,
-        "http://localhost:5173/change-password"
+        "https://note-it-smoky.vercel.app/change-password"
       );
     } catch (error) {
       console.log("error: \n", error);
@@ -51,7 +51,7 @@ export class AppwriteAuth {
     try {
       console.log("inside verify");
       return await this.account.createVerification(
-        "http://localhost:5173/verify"
+        "https://note-it-smoky.vercel.app/verify"
       );
     } catch (error) {
       console.log("error: \n", error);
@@ -81,8 +81,8 @@ export class AppwriteAuth {
     try {
       return this.account.createOAuth2Session(
         OAuthProvider.Google,
-        "http://localhost:5173",
-        "http://localhost:5173/login"
+        "https://note-it-smoky.vercel.app/",
+        "https://note-it-smoky.vercel.app/login"
       );
     } catch (error) {
       console.log("error: \n", error);
